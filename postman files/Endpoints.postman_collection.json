@@ -1,0 +1,716 @@
+{
+	"info": {
+		"_postman_id": "f8aadae5-5c82-451d-9a62-0bfdfc7e87ee",
+		"name": "Endpoints",
+		"description": "Referências\n\n[https://community.postman.com/t/parse-xml-json-then-pass-full-contents-to-webhook/57713](https://community.postman.com/t/parse-xml-json-then-pass-full-contents-to-webhook/57713)\n\n[https://learning.postman.com/docs/tests-and-scripts/write-scripts/packages/package-library/](https://learning.postman.com/docs/tests-and-scripts/write-scripts/packages/package-library/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11797429",
+		"_collection_link": "https://lunar-astronaut-565253.postman.co/workspace/Weather-API-v2~9a34945f-174e-427c-9997-1698614d0570/collection/11797429-f8aadae5-5c82-451d-9a62-0bfdfc7e87ee?action=share&source=collection_link&creator=11797429"
+	},
+	"item": [
+		{
+			"name": "clima atual",
+			"item": [
+				{
+					"name": "latitude e longitude",
+					"item": [
+						{
+							"name": "caminho feliz",
+							"item": [
+								{
+									"name": "Json",
+									"item": [
+										{
+											"name": "latitude e longitude válida",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+															"const jsonData = pm.response.json();\r",
+															"const current = jsonData.current;\r",
+															"const statusCode = JSON.parse(pm.collectionVariables.get(\"statusCode200\"));\r",
+															"\r",
+															"utils.validateStatusCode(statusCode);\r",
+															"utils.validateBodyJsonResponse();\r",
+															"utils.validateWeatherData(current, \"JSON\");\r",
+															"utils.validateJsonSchema(\"jsonSchemaSuccess\");"
+														],
+														"type": "text/javascript",
+														"packages": {
+															"@lunar-astronaut-565253/utils": {
+																"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+															}
+														}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															"const jsonSchemaSuccess = {\r",
+															"    type: \"object\",\r",
+															"    required: [\"location\", \"current\"],\r",
+															"    additionalProperties: false,\r",
+															"    properties: {\r",
+															"        location: {\r",
+															"            type: \"object\",\r",
+															"            required: [\r",
+															"                \"name\", \"region\", \"country\", \"lat\", \"lon\",\r",
+															"                \"tz_id\", \"localtime_epoch\", \"localtime\"\r",
+															"            ],\r",
+															"            additionalProperties: false,\r",
+															"            properties: {\r",
+															"                name: { type: \"string\" },\r",
+															"                region: { type: \"string\" },\r",
+															"                country: { type: \"string\" },\r",
+															"                lat: { type: \"number\" },\r",
+															"                lon: { type: \"number\" },\r",
+															"                tz_id: { type: \"string\" },\r",
+															"                localtime_epoch: { type: \"integer\" },\r",
+															"                localtime: { type: \"string\" }\r",
+															"            }\r",
+															"        },\r",
+															"        current: {\r",
+															"            type: \"object\",\r",
+															"            required: [\r",
+															"                \"last_updated_epoch\", \"last_updated\", \"temp_c\", \"temp_f\", \"is_day\",\r",
+															"                \"condition\", \"wind_mph\", \"wind_kph\", \"wind_degree\", \"wind_dir\",\r",
+															"                \"pressure_mb\", \"pressure_in\", \"precip_mm\", \"precip_in\", \"humidity\",\r",
+															"                \"cloud\", \"feelslike_c\", \"feelslike_f\", \"windchill_c\", \"windchill_f\",\r",
+															"                \"heatindex_c\", \"heatindex_f\", \"dewpoint_c\", \"dewpoint_f\",\r",
+															"                \"vis_km\", \"vis_miles\", \"uv\", \"gust_mph\", \"gust_kph\"\r",
+															"            ],\r",
+															"            additionalProperties: false,\r",
+															"            properties: {\r",
+															"                last_updated_epoch: { type: \"integer\" },\r",
+															"                last_updated: { type: \"string\" },\r",
+															"                temp_c: { type: \"number\" },\r",
+															"                temp_f: { type: \"number\" },\r",
+															"                is_day: { type: \"integer\" },\r",
+															"                condition: {\r",
+															"                    type: \"object\",\r",
+															"                    required: [\"text\", \"icon\", \"code\"],\r",
+															"                    properties: {\r",
+															"                        text: { type: \"string\" },\r",
+															"                        icon: { type: \"string\" },\r",
+															"                        code: { type: \"integer\" }\r",
+															"                    }\r",
+															"                },\r",
+															"                wind_mph: { type: \"number\" },\r",
+															"                wind_kph: { type: \"number\" },\r",
+															"                wind_degree: { type: \"integer\" },\r",
+															"                wind_dir: { type: \"string\" },\r",
+															"                pressure_mb: { type: \"number\" },\r",
+															"                pressure_in: { type: \"number\" },\r",
+															"                precip_mm: { type: \"number\" },\r",
+															"                precip_in: { type: \"number\" },\r",
+															"                humidity: { type: \"integer\" },\r",
+															"                cloud: { type: \"integer\" },\r",
+															"                feelslike_c: { type: \"number\" },\r",
+															"                feelslike_f: { type: \"number\" },\r",
+															"                windchill_c: { type: \"number\" },\r",
+															"                windchill_f: { type: \"number\" },\r",
+															"                heatindex_c: { type: \"number\" },\r",
+															"                heatindex_f: { type: \"number\" },\r",
+															"                dewpoint_c: { type: \"number\" },\r",
+															"                dewpoint_f: { type: \"number\" },\r",
+															"                vis_km: { type: \"number\" },\r",
+															"                vis_miles: { type: \"number\" },\r",
+															"                uv: { type: \"number\" },\r",
+															"                gust_mph: { type: \"number\" },\r",
+															"                gust_kph: { type: \"number\" },\r",
+															"            }\r",
+															"        }\r",
+															"    }\r",
+															"};\r",
+															"\r",
+															"const jsonSchemaSuccessString = JSON.stringify(jsonSchemaSuccess);\r",
+															"pm.environment.set(\"jsonSchemaSuccess\", jsonSchemaSuccessString);"
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"disabledSystemHeaders": {
+													"accept": true
+												}
+											},
+											"request": {
+												"auth": {
+													"type": "apikey",
+													"apikey": [
+														{
+															"key": "value",
+															"value": "{{validApiKey}}",
+															"type": "string"
+														},
+														{
+															"key": "in",
+															"value": "header",
+															"type": "string"
+														},
+														{
+															"key": "key",
+															"value": "key",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseURLHttps}}/{{formatoJson}}?q=-20.7535, -45.2814&lang=pt",
+													"host": [
+														"{{baseURLHttps}}"
+													],
+													"path": [
+														"{{formatoJson}}"
+													],
+													"query": [
+														{
+															"key": "q",
+															"value": "-20.7535, -45.2814"
+														},
+														{
+															"key": "lang",
+															"value": "pt"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Xml",
+									"item": [
+										{
+											"name": "latitude e longitude válida",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const utils = pm.require(\"@lunar-astronaut-565253/utils\");\r",
+															"let xmlText = pm.response.text();\r",
+															"let xmlData = utils.xmlTojson(xmlText);\r",
+															"const current = xmlData.root.current;\r",
+															"const statusCode = JSON.parse(pm.collectionVariables.get(\"statusCode200\"));\r",
+															"\r",
+															"utils.validateStatusCode(statusCode);\r",
+															"utils.validateBodyXmlResponse();\r",
+															"utils.validateWeatherData(current, \"XML\");\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {
+															"@lunar-astronaut-565253/utils": {
+																"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+															}
+														}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"protocolProfileBehavior": {
+												"disabledSystemHeaders": {
+													"accept": true
+												}
+											},
+											"request": {
+												"auth": {
+													"type": "apikey",
+													"apikey": [
+														{
+															"key": "value",
+															"value": "{{validApiKey}}",
+															"type": "string"
+														},
+														{
+															"key": "in",
+															"value": "header",
+															"type": "string"
+														},
+														{
+															"key": "key",
+															"value": "key",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseURLHttps}}/{{formatoXml}}?q=-20.7535, -45.2814&lang=pt",
+													"host": [
+														"{{baseURLHttps}}"
+													],
+													"path": [
+														"{{formatoXml}}"
+													],
+													"query": [
+														{
+															"key": "q",
+															"value": "-20.7535, -45.2814"
+														},
+														{
+															"key": "lang",
+															"value": "pt"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "caminho triste",
+							"item": [
+								{
+									"name": "Json",
+									"item": [
+										{
+											"name": "latitude e longitude inválidas",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+															"\r",
+															"const data = pm.response.json();\r",
+															"\r",
+															"let expectedErrosCode = utils.getExpectedErrosCode(\"ErrosInvalidParameters\");\r",
+															"let expectedStatusCode = utils.getExpectedStatusCode(\"ErrosInvalidParameters\");\r",
+															"\r",
+															"utils.validateStatusCode(expectedStatusCode)\r",
+															"utils.validateErrorCode(expectedErrosCode, data);\r",
+															"utils.validateBodyJsonResponse();\r",
+															"utils.validateJsonSchema(\"jsonSchemaError\")\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {
+															"@lunar-astronaut-565253/utils": {
+																"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+															}
+														}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "apikey",
+													"apikey": [
+														{
+															"key": "value",
+															"value": "{{validApiKey}}",
+															"type": "string"
+														},
+														{
+															"key": "in",
+															"value": "header",
+															"type": "string"
+														},
+														{
+															"key": "key",
+															"value": "key",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseURLHttps}}/{{formatoJson}}?q={{latitude}}{{virgula}}{{longitude}}&lang=pt",
+													"host": [
+														"{{baseURLHttps}}"
+													],
+													"path": [
+														"{{formatoJson}}"
+													],
+													"query": [
+														{
+															"key": "q",
+															"value": "{{latitude}}{{virgula}}{{longitude}}"
+														},
+														{
+															"key": "lang",
+															"value": "pt"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"type": "text/javascript",
+												"packages": {},
+												"exec": [
+													"\r",
+													"\r",
+													""
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"type": "text/javascript",
+												"packages": {},
+												"exec": [
+													""
+												]
+											}
+										}
+									]
+								},
+								{
+									"name": "Xml",
+									"item": [
+										{
+											"name": "latitude e longitude inválidas",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+															"const xmlData = pm.response.text();\r",
+															"const data = utils.xmlTojson(xmlData);\r",
+															"\r",
+															"let expectedErrosCode = utils.getExpectedErrosCode(\"ErrosInvalidParameters\");\r",
+															"let expectedStatusCode = utils.getExpectedStatusCode(\"ErrosInvalidParameters\");\r",
+															"\r",
+															"utils.validateStatusCode(expectedStatusCode);\r",
+															"utils.validateErrorCode(expectedErrosCode, data);\r",
+															"utils.validateBodyXmlResponse();\r",
+															""
+														],
+														"type": "text/javascript",
+														"packages": {
+															"@lunar-astronaut-565253/utils": {
+																"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+															}
+														}
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript",
+														"packages": {}
+													}
+												}
+											],
+											"request": {
+												"auth": {
+													"type": "apikey",
+													"apikey": [
+														{
+															"key": "value",
+															"value": "{{validApiKey}}",
+															"type": "string"
+														},
+														{
+															"key": "in",
+															"value": "header",
+															"type": "string"
+														},
+														{
+															"key": "key",
+															"value": "key",
+															"type": "string"
+														}
+													]
+												},
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseURLHttps}}/{{formatoXml}}?q={{latitude}}{{virgula}}{{longitude}}&lang=pt",
+													"host": [
+														"{{baseURLHttps}}"
+													],
+													"path": [
+														"{{formatoXml}}"
+													],
+													"query": [
+														{
+															"key": "q",
+															"value": "{{latitude}}{{virgula}}{{longitude}}"
+														},
+														{
+															"key": "lang",
+															"value": "pt"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const ErrosInvalidParameters = {\r",
+					"    \"400\": {\r",
+					"        \"MISSING_Q\": {\r",
+					"            \"code\": 1003,\r",
+					"            \"message\": \"Parameter 'q' not provided.\"\r",
+					"        },\r",
+					"        \"INVALID_URL\": {\r",
+					"            \"code\": 1005,\r",
+					"            \"message\": \"API request url is invalid.\"\r",
+					"        },\r",
+					"        \"LOCATION_NOT_FOUND\": {\r",
+					"            \"code\": 1006,\r",
+					"            \"message\": \"No location found matching parameter 'q'\"\r",
+					"        },\r",
+					"        \"INVALID_JSON\": {\r",
+					"            \"code\": 9000,\r",
+					"            \"message\": \"Json body passed in bulk request is invalid. Please make sure it is valid json with utf-8 encoding.\"\r",
+					"        },\r",
+					"        \"TOO_MANY_LOCATIONS\": {\r",
+					"            \"code\": 9001,\r",
+					"            \"message\": \"Json body contains too many locations for bulk request. Please keep it below 50 in a single request.\"\r",
+					"        },\r",
+					"        \"INTERNAL_ERROR\": {\r",
+					"            \"code\": 9999,\r",
+					"            \"message\": \"Internal application error.\"\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"const jsonSchemaSuccess = {\r",
+					"  \"type\": \"object\",\r",
+					"  \"required\": [\"location\", \"current\"],\r",
+					"  \"additionalProperties\": false,\r",
+					"  \"properties\": {\r",
+					"    \"location\": {\r",
+					"      \"type\": \"object\",\r",
+					"      \"required\": [\"name\", \"region\", \"country\", \"lat\", \"lon\", \"tz_id\", \"localtime_epoch\", \"localtime\"],\r",
+					"      \"additionalProperties\": false,\r",
+					"      \"properties\": {\r",
+					"        \"name\": { \"type\": \"string\" },\r",
+					"        \"region\": { \"type\": \"string\" },\r",
+					"        \"country\": { \"type\": \"string\" },\r",
+					"        \"lat\": { \"type\": \"number\" },\r",
+					"        \"lon\": { \"type\": \"number\" },\r",
+					"        \"tz_id\": { \"type\": \"string\" },\r",
+					"        \"localtime_epoch\": { \"type\": \"integer\" },\r",
+					"        \"localtime\": { \"type\": \"string\" }\r",
+					"      }\r",
+					"    },\r",
+					"    \"current\": {\r",
+					"      \"type\": \"object\",\r",
+					"      \"required\": [\r",
+					"        \"last_updated_epoch\", \"last_updated\", \"temp_c\", \"temp_f\", \"is_day\", \"condition\",\r",
+					"        \"wind_mph\", \"wind_kph\", \"wind_degree\", \"wind_dir\", \"pressure_mb\", \"pressure_in\",\r",
+					"        \"precip_mm\", \"precip_in\", \"humidity\", \"cloud\", \"feelslike_c\", \"feelslike_f\",\r",
+					"        \"windchill_c\", \"windchill_f\", \"heatindex_c\", \"heatindex_f\", \"dewpoint_c\", \"dewpoint_f\",\r",
+					"        \"vis_km\", \"vis_miles\", \"uv\", \"gust_mph\", \"gust_kph\"\r",
+					"      ],\r",
+					"      \"additionalProperties\": false,\r",
+					"      \"properties\": {\r",
+					"        \"last_updated_epoch\": { \"type\": \"integer\" },\r",
+					"        \"last_updated\": { \"type\": \"string\" },\r",
+					"        \"temp_c\": { \"type\": \"number\" },\r",
+					"        \"temp_f\": { \"type\": \"number\" },\r",
+					"        \"is_day\": { \"type\": \"integer\" },\r",
+					"        \"condition\": {\r",
+					"          \"type\": \"object\",\r",
+					"          \"required\": [\"text\", \"icon\", \"code\"],\r",
+					"          \"properties\": {\r",
+					"            \"text\": { \"type\": \"string\" },\r",
+					"            \"icon\": { \"type\": \"string\" },\r",
+					"            \"code\": { \"type\": \"integer\" }\r",
+					"          }\r",
+					"        },\r",
+					"        \"wind_mph\": { \"type\": \"number\" },\r",
+					"        \"wind_kph\": { \"type\": \"number\" },\r",
+					"        \"wind_degree\": { \"type\": \"integer\" },\r",
+					"        \"wind_dir\": { \"type\": \"string\" },\r",
+					"        \"pressure_mb\": { \"type\": \"number\" },\r",
+					"        \"pressure_in\": { \"type\": \"number\" },\r",
+					"        \"precip_mm\": { \"type\": \"number\" },\r",
+					"        \"precip_in\": { \"type\": \"number\" },\r",
+					"        \"humidity\": { \"type\": \"integer\" },\r",
+					"        \"cloud\": { \"type\": \"integer\" },\r",
+					"        \"feelslike_c\": { \"type\": \"number\" },\r",
+					"        \"feelslike_f\": { \"type\": \"number\" },\r",
+					"        \"windchill_c\": { \"type\": \"number\" },\r",
+					"        \"windchill_f\": { \"type\": \"number\" },\r",
+					"        \"heatindex_c\": { \"type\": \"number\" },\r",
+					"        \"heatindex_f\": { \"type\": \"number\" },\r",
+					"        \"dewpoint_c\": { \"type\": \"number\" },\r",
+					"        \"dewpoint_f\": { \"type\": \"number\" },\r",
+					"        \"vis_km\": { \"type\": \"number\" },\r",
+					"        \"vis_miles\": { \"type\": \"number\" },\r",
+					"        \"uv\": { \"type\": \"number\" },\r",
+					"        \"gust_mph\": { \"type\": \"number\" },\r",
+					"        \"gust_kph\": { \"type\": \"number\" }\r",
+					"      }\r",
+					"    }\r",
+					"  }\r",
+					"};\r",
+					"\r",
+					"const jsonSchemaError = {\r",
+					"    type: \"object\",\r",
+					"    required: [\"error\"],\r",
+					"    additionalProperties: false,\r",
+					"    properties: {\r",
+					"        error: {\r",
+					"        type: \"object\",\r",
+					"        required: [\"code\", \"message\"],\r",
+					"        additionalProperties: false,\r",
+					"        properties: {\r",
+					"            code: { type: \"integer\" },\r",
+					"            message: { type: \"string\" }\r",
+					"        }\r",
+					"    }\r",
+					"  }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"ErrosInvalidParameters\", JSON.stringify(ErrosInvalidParameters));\r",
+					"\r",
+					"const jsonSchemaSuccessString = JSON.stringify(jsonSchemaSuccess);\r",
+					"pm.collectionVariables.set(\"jsonSchemaSuccess\", jsonSchemaSuccessString);\r",
+					"\r",
+					"const jsonSchemaErrorString = JSON.stringify(jsonSchemaError);\r",
+					"pm.collectionVariables.set(\"jsonSchemaError\", jsonSchemaErrorString);\r",
+					"\r",
+					"const statusCode200 = [200]\r",
+					"pm.collectionVariables.set(\"statusCode200\", JSON.stringify(statusCode200));\r",
+					"\r",
+					"\r",
+					"\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "formatoJson",
+			"value": "current.json",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "formatoXml",
+			"value": "current.xml",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "API_ERRORS",
+			"value": ""
+		},
+		{
+			"key": "ErrosInvalidParameters",
+			"value": ""
+		},
+		{
+			"key": "statusCode200",
+			"value": ""
+		},
+		{
+			"key": "jsonSchemaError",
+			"value": ""
+		},
+		{
+			"key": "jsonSchemaSuccess",
+			"value": ""
+		}
+	]
+}

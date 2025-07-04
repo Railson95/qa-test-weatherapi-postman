@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "de256abc-ea68-48aa-ac21-6128732b28bf",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11797429",
+		"_collection_link": "https://lunar-astronaut-565253.postman.co/workspace/Weather-API-v2~9a34945f-174e-427c-9997-1698614d0570/collection/11797429-de256abc-ea68-48aa-ac21-6128732b28bf?action=share&source=collection_link&creator=11797429"
+	},
+	"item": [
+		{
+			"name": "Json",
+			"item": [
+				{
+					"name": "auth inválida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"const data = pm.response.json();\r",
+									"\r",
+									"let expectedErrosCode = utils.getExpectedErrosCode(\"ErrosInvalidAuth\");\r",
+									"let expectedStatusCode = utils.getExpectedStatusCode(\"ErrosInvalidAuth\");\r",
+									"\r",
+									"utils.validateStatusCode(expectedStatusCode);\r",
+									"utils.validateErrorCode(expectedErrosCode, data);\r",
+									"utils.validateBodyJsonResponse();\r",
+									"utils.validateJsonSchema(\"jsonSchemaError\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{apiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttps}}/{{formatoJson}}?q=-21.7535, -45.2814&lang=pt",
+							"host": [
+								"{{baseURLHttps}}"
+							],
+							"path": [
+								"{{formatoJson}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "-21.7535, -45.2814"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Xml",
+			"item": [
+				{
+					"name": "auth inválida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"const xmlData = pm.response.text();\r",
+									"const data = utils.xmlTojson(xmlData);\r",
+									"\r",
+									"let expectedErrosCode = utils.getExpectedErrosCode(\"ErrosInvalidAuth\");\r",
+									"let expectedStatusCode = utils.getExpectedStatusCode(\"ErrosInvalidAuth\");\r",
+									"\r",
+									"utils.validateStatusCode(expectedStatusCode);\r",
+									"utils.validateErrorCode(expectedErrosCode, data);\r",
+									"utils.validateBodyXmlResponse();\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{apiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttps}}/{{formatoXml}}?q=-21.7535, -45.2814&lang=pt",
+							"host": [
+								"{{baseURLHttps}}"
+							],
+							"path": [
+								"{{formatoXml}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "-21.7535, -45.2814"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"ErrosInvalidAuth = {\r",
+					"    \"401\": {\r",
+					"        \"MISSING_API_KEY\": {\r",
+					"            \"code\": 1002,\r",
+					"            \"message\": \"API key not provided.\"\r",
+					"        },\r",
+					"        \"INVALID_API_KEY\": {\r",
+					"            \"code\": 2006,\r",
+					"            \"message\": \"API key provided is invalid\"\r",
+					"        }\r",
+					"    },\r",
+					"    \"403\": {\r",
+					"        \"API_KEY_DISABLED\": {\r",
+					"            \"code\": 2008,\r",
+					"            \"message\": \"API key has been disabled.\"\r",
+					"        },\r",
+					"    }\r",
+					"}\r",
+					"\r",
+					"pm.collectionVariables.set(\"ErrosInvalidAuth\", JSON.stringify(ErrosInvalidAuth));\r",
+					"\r",
+					"\r",
+					"const jsonSchemaError = {\r",
+					"    type: \"object\",\r",
+					"    required: [\"error\"],\r",
+					"    additionalProperties: false,\r",
+					"    properties: {\r",
+					"        error: {\r",
+					"        type: \"object\",\r",
+					"        required: [\"code\", \"message\"],\r",
+					"        additionalProperties: false,\r",
+					"        properties: {\r",
+					"            code: { type: \"integer\" },\r",
+					"            message: { type: \"string\" }\r",
+					"        }\r",
+					"    }\r",
+					"  }\r",
+					"};\r",
+					"\r",
+					"const jsonSchemaErrorString = JSON.stringify(jsonSchemaError);\r",
+					"pm.collectionVariables.set(\"jsonSchemaError\", jsonSchemaErrorString);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiKey",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "ErrosInvalidAuth",
+			"value": ""
+		},
+		{
+			"key": "jsonSchemaError",
+			"value": ""
+		}
+	]
+}

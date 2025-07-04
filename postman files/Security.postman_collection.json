@@ -1,0 +1,601 @@
+{
+	"info": {
+		"_postman_id": "e9fba4f5-d10b-4ebf-a569-cffe7c8c310a",
+		"name": "Security",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11797429",
+		"_collection_link": "https://lunar-astronaut-565253.postman.co/workspace/Weather-API-v2~9a34945f-174e-427c-9997-1698614d0570/collection/11797429-e9fba4f5-d10b-4ebf-a569-cffe7c8c310a?action=share&source=collection_link&creator=11797429"
+	},
+	"item": [
+		{
+			"name": "Json",
+			"item": [
+				{
+					"name": "usa o protocolo https",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"\r",
+									"utils.validateHTTPsRequest();\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{validApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttps}}/{{formatoJson}}?q=-20.7535, -45.2814&lang=pt",
+							"host": [
+								"{{baseURLHttps}}"
+							],
+							"path": [
+								"{{formatoJson}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "-20.7535, -45.2814"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usa o protocolo http",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"\r",
+									"let expectedStatusCode = utils.getExpectedStatusCode(\"RedirectHttpToHttps\");\r",
+									"\r",
+									"// Valida se está redirecionando de http para https\r",
+									"utils.validateStatusCode(expectedStatusCode);\r",
+									"utils.validateHTTPRequest();\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{validApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttp}}/{{formatoJson}}?q=-20.7535, -45.2814&lang=pt",
+							"host": [
+								"{{baseURLHttp}}"
+							],
+							"path": [
+								"{{formatoJson}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "-20.7535, -45.2814"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "não reflete xss usando http",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"\r",
+									"utils.validateReflectedXss();\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{validApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttp}}/{{formatoJson}}?q=<script>alert('XSS')</script>&lang=pt",
+							"host": [
+								"{{baseURLHttp}}"
+							],
+							"path": [
+								"{{formatoJson}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "<script>alert('XSS')</script>"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "não reflete xss usando https",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"\r",
+									"utils.validateReflectedXss();"
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{validApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttps}}/{{formatoJson}}?q=<script>alert('XSS')</script>&lang=pt",
+							"host": [
+								"{{baseURLHttps}}"
+							],
+							"path": [
+								"{{formatoJson}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "<script>alert('XSS')</script>"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Xml",
+			"item": [
+				{
+					"name": "usa o protocolo https",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"\r",
+									"utils.validateHTTPsRequest();"
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{validApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttps}}/{{formatoXml}}?q=-20.7535, -45.2814&lang=pt",
+							"host": [
+								"{{baseURLHttps}}"
+							],
+							"path": [
+								"{{formatoXml}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "-20.7535, -45.2814"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "usa o protocolo http",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"\r",
+									"let expectedStatusCode = utils.getExpectedStatusCode(\"RedirectHttpToHttps\");\r",
+									"\r",
+									"// Valida se está redirecionando de http para https\r",
+									"utils.validateStatusCode(expectedStatusCode);\r",
+									"utils.validateHTTPRequest();\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{validApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttp}}/{{formatoXml}}?q=-20.7535, -45.2814&lang=pt",
+							"host": [
+								"{{baseURLHttp}}"
+							],
+							"path": [
+								"{{formatoXml}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "-20.7535, -45.2814"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "não reflete xss usando http",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"\r",
+									"utils.validateReflectedXss();"
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{validApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttp}}/{{formatoXml}}?q=<script>alert('XSS')</script>&lang=pt",
+							"host": [
+								"{{baseURLHttp}}"
+							],
+							"path": [
+								"{{formatoXml}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "<script>alert('XSS')</script>"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "não reflete xss usando https",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const utils = pm.require('@lunar-astronaut-565253/utils');\r",
+									"\r",
+									"utils.validateReflectedXss();"
+								],
+								"type": "text/javascript",
+								"packages": {
+									"@lunar-astronaut-565253/utils": {
+										"id": "01975993-f569-7a68-adc2-2793b4ef870b"
+									}
+								}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{validApiKey}}",
+									"type": "string"
+								},
+								{
+									"key": "in",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURLHttps}}/{{formatoXml}}?q=<script>alert('XSS')</script>&lang=pt",
+							"host": [
+								"{{baseURLHttps}}"
+							],
+							"path": [
+								"{{formatoXml}}"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "<script>alert('XSS')</script>"
+								},
+								{
+									"key": "lang",
+									"value": "pt"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const RedirectHttpToHttps = {\r",
+					"    \"301\": {\r",
+					"        \"MOVED_PERMANENTLY_TO_HTTPS\": {\r",
+					"            \"code\": 3001,\r",
+					"            \"message\": \"The requested resource has been permanently moved to HTTPS.\"\r",
+					"        }\r",
+					"    },\r",
+					"    \"302\": {\r",
+					"        \"FOUND_TEMPORARY_REDIRECT_TO_HTTPS\": {\r",
+					"            \"code\": 3002,\r",
+					"            \"message\": \"The requested resource has been temporarily redirected to HTTPS.\"\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"RedirectHttpToHttps\", JSON.stringify(RedirectHttpToHttps));"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "RedirectHttpToHttps",
+			"value": ""
+		}
+	]
+}
