@@ -1,9 +1,9 @@
-# Testes Automatizados com Postman - Weather API
+# 🌦️ Testes Automatizados com Postman - Weather API
 
-- Mini-projeto de testes automatizados com Postman usando a API pública da OpenWeather.
-- Validação de parâmetros, autenticação, segurança (XSS, redirecionamento), estrutura de dados e mensagens de erro.
+- Mini-projeto de automação de testes utilizando o Postman com a API pública da OpenWeather.
+- Validação de parâmetros, autenticação, segurança (XSS e redirecionamento), estrutura de dados e mensagens de erro.
 - Baseado na heurística POISED e técnicas como Partição de Equivalência e Análise de Valor Limite.
-- Disponível em: https://www.weatherapi.com/
+- A Api está disponível em: https://www.weatherapi.com/
 
 ---
 
@@ -23,51 +23,73 @@
 
 ---
 
-## 🧰 Como instalar o ambiente
+## ⚙️ Como configurar o ambiente
 
-Abrir algum terminal e digitar:
+Abra um terminal e siga os passos abaixo:
 
-🔁 1. Fazer o clone do repositório e redirecionar para a pasta
+🔽 1. Clonar o repositório e acessar a pasta:
 
 ```bash
 git clone https://github.com/Railson95/qa-test-weatherapi-postman.git
 cd a-test-weatherapi-postman
 ```
 
-✅ 2. Fazer download e instalar o Postman pelo seguinte link, caso esteja no Windows
+🧰 2. Baixar e instalar o Postman (Windows):
 
 ```bash
 https://dl.pstmn.io/download/version/11.0.7/win64
 ```
 
-🛠️ 3. Fazer uma conta na Weather APi
+🔑 3. Criar uma conta na Weather API para obter a API Key:
 
 ```bash
 https://www.weatherapi.com/signup.aspx
 ```
 
-Precisamos dessa conta para gerar a APIKey e assim estarmos autenticados para enviarmos requsições para a API
-Após feito a conta, entrar e pegar a APIKey, ela fica em Dashboard/API
-Guarde ela em um arquivo de texto auxiliar, iremos precisar futuramente
+Acesse o painel ("Dashboard") após o login e copie sua API Key.
+Salve em um local seguro, pois será usada nos testes.
 
-📦 4. Importe as Collections e o Enviroment baixados do Git no Postman
+📤 4. Importar os arquivos .postman_collection.json e .postman_environment.json no Postman.
 
-📁 5. No Postman clique em Enviroment e na variável de ambiente validApiKey, cole a APIKey que coletamos da sua conta da Weather API
+🌍 5. No Postman, selecione o Environment e cole a API Key na variável validApiKey.
 
-▶️ Como rodar os testes
+▶️ Como executar os testes
 
-- Clique no Runner do Postman
-- Arraste e solte a Collection que você quer testar
-- Selecione em data driven o arquivo csv que contém os Casos de Teste
+- Abra o Runner no Postman.
+- Arraste a Collection desejada para o Runner.
+- Em "Data", selecione o arquivo .csv correspondente à Collection.
 
 ```bash
-Para a Collection Auth usar o arquivo: auth_data2
-Para a Collection Endpoints usar o arquivo: weather_data
-Não foi necessário a criação de arquivo csv para a Collection Security
+Collection: Auth         → Arquivo: auth_data2.csv
+Collection: Endpoints    → Arquivo: weather_data.csv
+Collection: Security     → Não requer arquivo .csv
 ```
 
-https://github.com/Railson95/qa-test-weatherapi-postman/blob/master/assets/select_file.png
+![Selecionar arquivo CSV](https://raw.githubusercontent.com/Railson95/qa-test-weatherapi-postman/master/assets/select_file.png)
+
+# Imagem do teste realizado para o Endpoint Clima Atual
+
+Parâmetros testados: Latitude e Longitude
+
+![Teste do Endpoint Clima Atual](https://raw.githubusercontent.com/Railson95/qa-test-weatherapi-postman/master/assets/endpoints.png)
+
+# Imagens mostrando o uso dos Packages e a remoção de Código Duplicado
+
+## Chamando as funções criadas no Packeges da aba Script
+
+### Requisição 1
+
+![Package1](https://raw.githubusercontent.com/Railson95/qa-test-weatherapi-postman/master/assets/packages1.png)
+
+### Requisição 2
+
+![Package2](https://raw.githubusercontent.com/Railson95/qa-test-weatherapi-postman/master/assets/packages2.png)
+
+## Package criado com nome de utils
+
+![Package3](https://raw.githubusercontent.com/Railson95/qa-test-weatherapi-postman/master/assets/packages3.png)
 
 ✍️ Autor
 Railson Martins da Mata
-Projeto educacional com fins de prática em automação de testes de API com Postman, explorando a heurística POISED.
+Este projeto tem fins educacionais e foi desenvolvido com foco em práticas de automação de testes para APIs, aplicando a heurística
+POISED como guia de cobertura e análise.
